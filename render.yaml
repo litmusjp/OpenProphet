@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: openprophet
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 4534
+      - key: ALPACA_ENDPOINT
+        value: https://paper-api.alpaca.markets

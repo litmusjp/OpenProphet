@@ -6,6 +6,10 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: PORT
-        value: 4534
+        value: 3737
+      - key: AGENT_PORT
+        value: 3737
+      - key: SERVER_HOST
+        value: 0.0.0.0
       - key: ALPACA_ENDPOINT
         value: https://paper-api.alpaca.markets

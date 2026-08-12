@@ -63,6 +63,30 @@ const goAxios = axios.create({
 });
 
 const app = express();
+// --- BASIC AUTH SETUP ---
+const BASIC_AUTH_USER = process.env.BASIC_AUTH_USER || 'admin';
+const BASIC_AUTH_PASS = process.env.BASIC_AUTH_PASS || 'secret';
+
+app.use((req, res, next) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    res.setHeader('WWW-Authenticate', 'Basic realm="OpenProphet Dashboard"');
+    return res.status(401).send('Authentication required.');
+  }
+
+  const auth = Buffer.from(authHeader.split(' ')[1], 'base64').toString().split(':');
+  const user = auth[0];
+  const pass = auth[1];
+
+  if (user === BASIC_AUTH_USER && pass === BASIC_AUTH_PASS) {
+    return next();
+  }
+
+  res.setHeader('WWW-Authenticate', 'Basic realm="OpenProphet Dashboard"');
+  return res.status(401).send('Access denied.');
+});
+// ------------------------
+
 app.use(express.json({ limit: '1mb' }));
 
 // ── Auth Middleware ────────────────────────────────────────────────

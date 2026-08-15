@@ -1,0 +1,10 @@
+// opencode.jsonc
+{
+  "mcp": {
+    "prophet": {
+      "type": "local",
+      "command": ["node", "./mcp-server.js"],
+      "enabled": true
+    }
+  }
+}

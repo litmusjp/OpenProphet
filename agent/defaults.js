@@ -7,7 +7,7 @@
 // ── Models ─────────────────────────────────────────────────────────
 // Kept as the current values on purpose; do not change an ID here without verifying the
 // provider actually serves it (that needs a runtime capability check).
-export const DEFAULT_AGENT_MODEL = 'anthropic/claude-sonnet-5';
+export const DEFAULT_AGENT_MODEL = 'anthropic/claude-sonnet-4-6';
 export const DEFAULT_GEMINI_MODEL = 'gemini-2.0-flash-exp';
 
 // Resolve the model to use: explicit run override → persisted agent choice → env → built-in.

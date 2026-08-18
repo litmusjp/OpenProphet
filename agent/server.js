@@ -68,6 +68,19 @@ const BASIC_AUTH_USER = process.env.BASIC_AUTH_USER || 'admin';
 const BASIC_AUTH_PASS = process.env.BASIC_AUTH_PASS || 'secret';
 
 app.use((req, res, next) => {
+  // Allow internal requests from localhost/container services without auth
+  const remoteIp = req.ip || req.connection.remoteAddress || '';
+  if (
+    remoteIp === '127.0.0.1' ||
+    remoteIp === '::1' ||
+    remoteIp === '::ffff:127.0.0.1' ||
+    req.hostname === 'localhost' ||
+    req.hostname === '127.0.0.1'
+  ) {
+    return next();
+  }
+
+  // Enforce Basic Auth for external web visitors
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     res.setHeader('WWW-Authenticate', 'Basic realm="OpenProphet Dashboard"');
